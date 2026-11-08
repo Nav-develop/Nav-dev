@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💗</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe4ef, #fff5f8);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    color: #bd527c;
+}
+
+.container {
+    text-align: center;
+    padding: 25px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* หัวข้อ */
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    margin-bottom: 35px;
+    color: #c77b98;
+}
+
+/* ซองจดหมาย */
+
+.envelope {
+    position: relative;
+    width: 260px;
+    height: 170px;
+    background: #f7a9c4;
+    margin: 50px auto;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s;
+    box-shadow: 0 10px 25px #e8a1bc66;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-top: 100px solid #fbd0df;
+    transform-origin: top;
+    transition: 0.6s;
+    z-index: 3;
+}
+
+.envelope::after {
+    content: "♥";
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    color: white;
+    z-index: 4;
+}
+
+.envelope.open::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope.open .letter {
+    transform: translateY(-130px);
+}
+
+.letter {
+    position: absolute;
+    width: 220px;
+    height: 130px;
+    background: white;
+    left: 20px;
+    top: 15px;
+    border-radius: 8px;
+    transition: 0.8s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    z-index: 2;
+}
+
+/* ปุ่ม */
+
+button {
+    border: none;
+    padding: 13px 28px;
+    border-radius: 30px;
+    background: #e77da5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px #e77da555;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #d95e8c;
+}
+
+/* การ์ดคำอวยพร */
+
+.card {
+    display: none;
+    background: #ffffffd9;
+    padding: 30px 22px;
+    border-radius: 25px;
+    box-shadow: 0 10px 35px #d98eac44;
+    animation: fadeIn 1.5s ease;
+}
+
+.card.show {
+    display: block;
+}
+
+.card h2 {
+    font-size: 29px;
+    margin-bottom: 20px;
+}
+
+.card p {
+    line-height: 2;
+    white-space: pre-line;
+    margin: 20px 0;
+}
+
+/* รูปภาพ */
+
+.photo {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 6px solid white;
+    box-shadow: 0 5px 20px #d98eac55;
+    margin: 15px auto;
+    display: block;
+}
+
+/* หัวใจลอย */
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    color: #ed8db1;
+    font-size: 22px;
+    animation: float 6s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* มือถือ */
+
+@media(max-width: 480px) {
+    h1 { font-size: 25px; }
+    .card { padding: 25px 15px; }
+}
+
+/* ปุ่มไปหน้าแกลเลอรี่ */
+.gallery-btn {
+    margin-top: 20px;
+    background: #e77da5;
+}
+
+/* หน้า Gallery */
+#galleryPage {
+    display: none;
+    animation: fadeIn 1s ease;
+}
+
+#galleryPage.show {
+    display: block;
+}
+
+.gallery-title {
+    font-size: 30px;
+    margin: 25px 0 10px;
+    color: #d95e8c;
+}
+
+.gallery-subtitle {
+    margin-bottom: 25px;
+    color: #c77b98;
+}
+
+/* Grid รูปภาพ */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px auto;
+}
+
+.gallery-item {
+    background: white;
+    padding: 7px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #d98eac33;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.gallery-item p {
+    padding: 9px 3px;
+    font-size: 13px;
+    color: #bd527c;
+}
+
+/* ปุ่มย้อนกลับ */
+.back-btn {
+    background: #f5c1d5;
+    color: #a3446b;
+    margin: 20px 0;
+}
+
+@media(max-width: 400px) {
+    .gallery-item img {
+        height: 130px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💗 Happy Birthday 💗</h1>
+    <p class="subtitle">
+        มีจดหมายเล็ก ๆ อยากให้เธอเปิดอ่าน
+    </p>
+
+    <!-- ซองจดหมาย -->
+
+    <div class="envelope" id="envelope"
+         onclick="openLetter()">
+
+        <div class="letter">
+            For You 💌
+        </div>
+
+    </div>
+
+    <button id="openBtn" onclick="openLetter()">
+        เปิดจดหมาย 💗
+    </button>
+
+    <!-- เนื้อหาจดหมาย -->
+
+    <div class="card" id="card">
+
+        <h2>สุขสันต์วันเกิดนะ 🎂</h2>
+
+        <!-- เปลี่ยนรูปตรงนี้ -->
+        <img src="myphoto.jpg" class="photo"
+             alt="Our memory">
+
+        <!-- เปลี่ยนข้อความได้ตรงนี้ -->
+        <p>
+ขอให้วันนี้เป็นวันที่พิเศษมาก ๆ
+
+ขอให้เธอมีความสุขในทุก ๆ วัน
+เจอแต่สิ่งดี ๆ และคนที่น่ารัก
+ขอให้ทุกความฝันค่อย ๆ เป็นจริง
+
+ขอบคุณที่เข้ามาเป็นความทรงจำดี ๆ นะ 💗
+
+        </p>
+
+        <h3>With Love ♡</h3>
+        
+<button class="gallery-btn" onclick="showGallery()">
+    ดูความทรงจำของเรา 📸
+</button>
+
+    </div>
+
+</div>
+
+<!-- PAGE 2 : GALLERY -->
+
+<div class="container" id="galleryPage">
+
+    <h1 class="gallery-title">
+        Our Memories 💗
+    </h1>
+
+    <p class="gallery-subtitle">
+        รวมภาพความทรงจำดี ๆ ของเรา
+    </p>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item">
+            <img src="photo1.jpg" alt="Memory 1">
+            <p>ความทรงจำที่ 1 ♡</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="photo2.jpg" alt="Memory 2">
+            <p>วันที่แสนพิเศษ 💗</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="photo3.jpg" alt="Memory 3">
+            <p>รอยยิ้มที่น่าจดจำ</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="photo4.jpg" alt="Memory 4">
+            <p>ช่วงเวลาดี ๆ 🌷</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="photo5.jpg" alt="Memory 5">
+            <p>อีกหนึ่งความทรงจำ</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="photo6.jpg" alt="Memory 6">
+            <p>Always Special ♡</p>
+        </div>
+
+    </div>
+
+    <button class="back-btn" onclick="backHome()">
+        ← กลับไปหน้าจดหมาย
+    </button>
+
+</div>
+
+<script>
+
+// เปิดจดหมาย
+
+let opened = false;
+
+function openLetter() {
+
+    if (opened) return;
+
+    opened = true;
+
+    document.getElementById("envelope")
+        .classList.add("open");
+
+    document.getElementById("openBtn")
+        .style.display = "none";
+
+    setTimeout(() => {
+
+        document.getElementById("card")
+            .classList.add("show");
+
+        document.getElementById("card")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+    }, 1200);
+
+}
+
+// หัวใจลอย
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+    heart.innerHTML = "♥";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration =
+        (4 + Math.random() * 4) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+
+}
+
+setInterval(createHeart, 500);
+
+function showGallery() {
+
+    document.querySelector(".container")
+        .style.display = "none";
+
+    const gallery = document.getElementById("galleryPage");
+
+    gallery.classList.add("show");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function backHome() {
+
+    document.getElementById("galleryPage")
+        .classList.remove("show");
+
+    document.querySelector(".container")
+        .style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+</body>
+</html>
